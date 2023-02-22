@@ -1,39 +1,43 @@
 import pytest
 
+FIZZ = 'Fizz'
+BUZZ = 'buzz'
+FIZZ_BUZZ = 'Fizz-buzz'
+
 
 class FizzBuzz:
 
     @staticmethod
-    def compute(inputNumber: int):
-        if inputNumber == 0:
+    def compute(input_number: int) -> str:
+        if input_number == 0:
             return '0'
 
-        if inputNumber % 3 == 0:
-            return 'Fizz'
+        if input_number % 15 == 0:
+            return FIZZ_BUZZ
 
-        if inputNumber % 5 == 0:
-            return 'buzz'
+        if input_number % 3 == 0:
+            return FIZZ
 
-        return str(inputNumber)
+        if input_number % 5 == 0:
+            return BUZZ
+
+        return str(input_number)
 
 
 class TestKata:
 
-    @pytest.mark.parametrize("test_input,expected", [(0, '0'), (1, '1'), (2,'2')])
-    def test_eval(self,test_input, expected):
+    @pytest.mark.parametrize("test_input", [3, 6, 9])
+    def test_fizz(self, test_input):
+        assert FizzBuzz.compute(test_input) == 'Fizz'
+
+    @pytest.mark.parametrize("test_input", [5, 10, 50])
+    def test_buzz(self, test_input):
+        assert FizzBuzz.compute(test_input) == 'buzz'
+
+    @pytest.mark.parametrize("test_input", [15, 30, 45, 60])
+    def test_fizz_buzz(self, test_input):
+        assert FizzBuzz.compute(test_input) == 'Fizz-buzz'
+
+    @pytest.mark.parametrize("test_input, expected", [(0, '0'), (1, '1'), (2, '2')])
+    def test_other_values(self, test_input, expected):
         assert FizzBuzz.compute(test_input) == expected
-
-    def test_0(self):
-
-        assert FizzBuzz.compute(0) == '0'
-
-    def test_fizz(self):
-        assert FizzBuzz.compute(3) == 'Fizz'
-
-    def test_fizz_1(self):
-        assert FizzBuzz.compute(1) == '1'
-
-    def test_buzz(self):
-        assert FizzBuzz.compute(5) == 'buzz'
-
-
